@@ -30,7 +30,7 @@ void mySend(byte type, uint16_t len, uint8_t *buf){
       Wire.write(buf+temp, ((len - temp) < WIRE_BUFFER_SIZE) ? (len - temp) : WIRE_BUFFER_SIZE);
       Wire.endTransmission();    // stop transmitting
       temp += WIRE_BUFFER_SIZE;
-      delay(100);
+//      delay(100);
     }
 }
 
@@ -55,6 +55,7 @@ class MyReportDescParser : public USBReadParser
       if((i+1)%4 == 0) Serial.print("/");
       if((i+1)%16 == 0) Serial.print("\n");
     }
+    Serial.print("\n");
     mySend(type, len, pbuf);
   }
 };

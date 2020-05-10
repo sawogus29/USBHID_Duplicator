@@ -20,9 +20,8 @@ const byte MY_ADDRESS = 9;
 void setup() {
   Wire.begin(MY_ADDRESS);// join i2c bus with address #8
 
-  TWAR = (MY_ADDRESS << 1) | 1; 
+  TWAR = (MY_ADDRESS << 1) | 1; // enable broadcast receive
   
-//  Wire.onReceive(i2cHandler); // register event
   Wire.onReceive(receiveEvent); // register event
   
   Serial.begin(115200);           // start serial for output
@@ -35,7 +34,7 @@ void loop() {
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 /*
- * [ HEADER [type : 1byte][len : 1 or 2 byte] ] [ DATA ]
+ * [ HEADER [type : 1byte][len : 2 byte] ] [ DATA ]
  * 
  * type : type of DATA ( REPORT or DESCRIPTOR )
  * len : length of DATA
@@ -85,18 +84,22 @@ void receiveEvent(int howMany) {
 }
 
 void onDescriptor(uint8_t *buffer, uint16_t len){
+  /*****Edit Here********/
   Serial.print("Descriptor \n");
-  for(int i=0; i<len; i++) { 
-    PrintHex(buffer[i], 0x80); 
-    Serial.print(" ");
-    if((i+1)%4 == 0) Serial.print("/");
-    if((i+1)%16 == 0) Serial.print("\n");
-  }
+  for(int i=0; i<len; i++) { PrintHex(buffer[i], 0x80); Serial.print(" "); if((i+1)%4 == 0) Serial.print("/"); if((i+1)%16 == 0) Serial.print("\n");}
   Serial.print("\n");
+
+
+  
+  /************************/
 }
 
 void onReport(uint8_t *buffer, uint16_t len){
+  /*****Edit Here********/
   Serial.print("Report \n");
   for(int i=0; i<len; i++) { PrintHex(buffer[i], 0x80); }
   Serial.print("\n");
+
+  
+  /************************/
 }
