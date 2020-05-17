@@ -1,9 +1,11 @@
 /*
   Copyright (c) 2015, Arduino LLC
   Original code (pre-library): Copyright (c) 2011, Peter Barrett
+
   Permission to use, copy, modify, and/or distribute this software for
   any purpose with or without fee is hereby granted, provided that the
   above copyright notice and this permission notice appear in all copies.
+
   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
   WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
   WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR
@@ -13,10 +15,10 @@
   ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
   SOFTWARE.
  */
-/******MODIFIED*****/
-#ifndef myHID_h
-#define myHID_h
-/*******************/
+
+#ifndef HID_h
+#define HID_h
+
 #include <stdint.h>
 #include <Arduino.h>
 #include "PluggableUSB.h"
@@ -49,8 +51,8 @@
 
 // Normal or bios protocol (Keyboard/Mouse) HID1.11 Page 54 7.2.5 Get_Protocol Request
 // "protocol" variable is used for this purpose.
-#define HID_BOOT_PROTOCOL  0
-#define HID_REPORT_PROTOCOL 1
+#define HID_BOOT_PROTOCOL	0
+#define HID_REPORT_PROTOCOL	1
 
 // HID Request Type HID1.11 Page 51 7.2.1 Get_Report Request
 #define HID_REPORT_TYPE_INPUT   1
@@ -93,10 +95,7 @@ public:
   int begin(void);
   int SendReport(uint8_t id, const void* data, int len);
   void AppendDescriptor(HIDSubDescriptor* node);
-  /******* MODIFIED ********/
-  void DeleteDescriptor();
-  /*************************/
-  
+
 protected:
   // Implementation of the PluggableUSBModule
   int getInterface(uint8_t* interfaceCount);
@@ -123,6 +122,4 @@ HID_& HID();
 
 #endif // USBCON
 
-/******* MODIFIED ********/
-#endif // myHID_h
-/*************************/
+#endif // HID_h

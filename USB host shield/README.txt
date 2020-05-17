@@ -1,1 +1,0 @@
-Please replace "usbhid.cpp" of USB host shield library with this file. 
