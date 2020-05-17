@@ -39,6 +39,10 @@ class MyReportParser : public HIDReportParser
   const byte type = REPORT;
   void Parse(USBHID *hid __attribute__((unused)), bool is_rpt_id __attribute__((unused)), uint8_t len, uint8_t *buf) {
     Serial.println("Report");
+    for(uint16_t i = 0; i < len ; i++){
+      PrintHex(buf[i], 0x80);
+      Serial.print(" ");
+    }
     mySend(type, (uint16_t)len, buf);
   }
 };

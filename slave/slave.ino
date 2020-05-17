@@ -11,20 +11,50 @@
 
 #include <Usb.h>
 #include <Wire.h>
+#include <HID.h>
+#include <avr/wdt.h>
+#include <EEPROM.h>
 
 #define DESCRIPTOR 0
 #define REPORT 1
 
 const byte MY_ADDRESS = 9;
 
-void setup() {
-  Wire.begin(MY_ADDRESS);// join i2c bus with address #8
+union{
+  uint16_t _16;
+  uint8_t _8[2];
+} uni_len;
 
-  TWAR = (MY_ADDRESS << 1) | 1; // enable broadcast receive
-  
-  Wire.onReceive(receiveEvent); // register event
-  
+uint8_t descriptor[54] = {
+  0x05, 0x01, 0x09, 0x06, 0xA1, 0x01, 0x05, 0x08, 0x19, 0x01, 0x29, 0x03, 0x15, 0x00, 0x25, 0x01,
+0x75, 0x01, 0x95, 0x03, 0x91, 0x02, 0x95, 0x05, 0x91, 0x01, 0x05, 0x07, 0x19, 0xE0, 0x29, 0xE7,
+0x95, 0x08, 0x81, 0x02, 0x75, 0x08, 0x95, 0x01, 0x81, 0x01, 0x19, 0x00, 0x29, 0x91, 0x26, 0xFF,
+0x00, 0x95, 0x06, 0x81, 0x00, 0xC0
+};
+
+void setup() {
   Serial.begin(115200);           // start serial for output
+  
+//  uni_len._8[0] = (uint8_t)EEPROM.read(0);
+//  uni_len._8[1] = (uint8_t)EEPROM.read(1);
+//  static uint16_t len = uni_len._16;
+//  static uint8_t *buffer;
+//  if(len > 128){
+//    Serial.println("Descriptor Length is too long");
+//  }else{
+//    buffer = (uint8_t *)malloc(len);
+//    for(int i=0; i<len; i++){
+//      buffer[i] = (uint8_t)EEPROM.read(i+2);
+//    }
+//    static HIDSubDescriptor node(buffer, len);
+//    HID().AppendDescriptor(&node);
+//  }
+  static HIDSubDescriptor node(descriptor, 54);
+  HID().AppendDescriptor(&node);
+  
+  Wire.begin(MY_ADDRESS);// join i2c bus with address #8
+  TWAR = (MY_ADDRESS << 1) | 1; // enable broadcast receive  
+  Wire.onReceive(receiveEvent); // register event
 }
 
 void loop() {
@@ -89,10 +119,24 @@ void onDescriptor(uint8_t *buffer, uint16_t len){
   for(int i=0; i<len; i++) { PrintHex(buffer[i], 0x80); Serial.print(" "); if((i+1)%4 == 0) Serial.print("/"); if((i+1)%16 == 0) Serial.print("\n");}
   Serial.print("\n");
 
+  uni_len._16 = len;
+  EEPROM.write(0,(uint8_t)(uni_len._8[0]));
+  EEPROM.write(1,(uint8_t)(uni_len._8[1]));
+  for(int i = 0; i < len; i++){
+    EEPROM.write(2+i, buffer[i]);
+  }
 
-  
+  //Restart
+  wdt_enable(WDTO_8S);
+  while(1)
+  {
+    Serial.println("restart...");
+    delay(1000);
+//     wdt_reset();          // uncomment to avoid reboot
+  }
   /************************/
 }
+
 
 void onReport(uint8_t *buffer, uint16_t len){
   /*****Edit Here********/
@@ -100,6 +144,6 @@ void onReport(uint8_t *buffer, uint16_t len){
   for(int i=0; i<len; i++) { PrintHex(buffer[i], 0x80); }
   Serial.print("\n");
 
-  
+  HID().SendReport(2, buffer, len);
   /************************/
 }
