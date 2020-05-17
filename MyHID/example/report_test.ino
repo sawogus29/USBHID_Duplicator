@@ -7,7 +7,7 @@ static const uint8_t _hidReportDescriptor[] = {
 0x00, 0x95, 0x06, 0x81, 0x00, 0xC0
 };
 
-static const uint8_t _pageDown[] = {
+static const uint8_t _keyA[] = {
   0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00
 };
 
@@ -28,7 +28,7 @@ void loop() {
   if(Serial.available()){
     Serial.read();
 
-    HID().SendReport(0/*unused*/, _pageDown, sizeof(_pageDown));
+    HID().SendReport(0/*unused*/, _keyA, sizeof(_keyA));
     HID().SendReport(0/*unused*/, _release, sizeof(_release));  
   }
 }
