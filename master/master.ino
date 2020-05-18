@@ -30,7 +30,7 @@ void mySend(byte type, uint16_t len, uint8_t *buf){
       Wire.write(buf+temp, ((len - temp) < WIRE_BUFFER_SIZE) ? (len - temp) : WIRE_BUFFER_SIZE);
       Wire.endTransmission();    // stop transmitting
       temp += WIRE_BUFFER_SIZE;
-//      delay(100);
+      delay(100);
     }
 }
 
