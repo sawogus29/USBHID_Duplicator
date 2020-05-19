@@ -1,6 +1,15 @@
-[![USB HID Duplicator Demo(Mouse)](http://img.youtube.com/vi/KWI-PguVAN8/0.jpg)](http://www.youtube.com/watch?v=https://www.youtube.com/watch?v=KWI-PguVAN8 "USB HID Duplicator Demo(Mouse)")
-[![USB HID Duplicator demo (Wireless Presenter)](http://img.youtube.com/vi/Hjw7fimRGSo/0.jpg)](http://www.youtube.com/watch?v=https://www.youtube.com/watch?v=Hjw7fimRGSo "USB HID Duplicator demo (Wireless Presenter)")
-[![USB HID Duplicator demo (Keyboard)](http://img.youtube.com/vi/Ez5Jvu0lLoQ/0.jpg)](http://www.youtube.com/watch?v=https://www.youtube.com/watch?v=Ez5Jvu0lLoQ "USB HID Duplicator demo (Keyboard)")
+# Demo Video
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=KWI-PguVAN8
+" target="_blank"><img src="http://img.youtube.com/vi/KWI-PguVAN8/0.jpg" 
+alt="USB HID Duplicator Demo(Mouse)" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Ez5Jvu0lLoQ
+" target="_blank"><img src="http://img.youtube.com/vi/Ez5Jvu0lLoQ/0.jpg" 
+alt="USB HID Duplicator demo (Keyboard)" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Hjw7fimRGSo
+" target="_blank"><img src="http://img.youtube.com/vi/Hjw7fimRGSo/0.jpg" 
+alt="USB HID Duplicator demo (Wireless Presenter)" width="240" height="180" border="10" /></a>
 
 # Summary
 A USB HID Duplicator is a device which duplicates report of USB Human Interface Device(HID), such as mouse, keyboard, joystick, etc.  
