@@ -1,3 +1,5 @@
+//#define __DEBUG__
+
 #include <usbhid.h>
 #include <hiduniversal.h>
 #include <hidescriptorparser.h>
@@ -38,11 +40,14 @@ class MyReportParser : public HIDReportParser
 {
   const byte type = REPORT;
   void Parse(USBHID *hid __attribute__((unused)), bool is_rpt_id __attribute__((unused)), uint8_t len, uint8_t *buf) {
+#ifdef __DEBUG__
     Serial.println("Report");
     for(uint16_t i = 0; i < len ; i++){
       PrintHex(buf[i], 0x80);
       Serial.print(" ");
     }
+    Serial.print("\n");
+#endif
     mySend(type, (uint16_t)len, buf);
   }
 };
@@ -50,18 +55,32 @@ class MyReportParser : public HIDReportParser
 class MyReportDescParser : public USBReadParser
 {
   const byte type = DESCRIPTOR;
-  void Parse(const uint16_t len, const uint8_t *pbuf, const uint16_t &offset __attribute__((unused))) {
-    Serial.println("Descriptor");
-    Serial.print("len : ");Serial.println(len);
-    for(uint16_t i = 0; i < len ; i++){
-      PrintHex(pbuf[i], 0x80);
-      Serial.print(" ");
-      if((i+1)%4 == 0) Serial.print("/");
-      if((i+1)%16 == 0) Serial.print("\n");
+  const uint8_t USB_HOST_SHIELD_constBufLen = 64; // Defined in USB_Host_Shield/usbhid.cpp - USBHID::GetReportDesc()
+  static const uint8_t REPORT_DESC_MAX_LEN = 128;
+  uint8_t reportDesc[REPORT_DESC_MAX_LEN];
+  
+  void Parse(const uint16_t len, const uint8_t *pbuf, const uint16_t &offset) {
+    memcpy(reportDesc + offset, pbuf, len);
+    
+    if( len < USB_HOST_SHIELD_constBufLen ){
+      uint16_t reportDescLen = offset + len;
+      
+#ifdef __DEBUG__
+      Serial.println("Descriptor");
+      Serial.print("len : ");Serial.println(reportDescLen);
+      for(uint16_t i = 0; i < reportDescLen ; i++){
+        PrintHex(reportDesc[i], 0x80);
+        Serial.print(" ");
+        if((i+1)%4 == 0) Serial.print("/");
+        if((i+1)%16 == 0) Serial.print("\n");
+      }
+      Serial.print("\n");
+#endif
+
+      mySend(type, reportDescLen, reportDesc);
     }
-    Serial.print("\n");
-    mySend(type, len, pbuf);
-  }
+      
+   }
 };
 
 class MyHID : public HIDUniversal

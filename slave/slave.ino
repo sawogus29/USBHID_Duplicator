@@ -1,13 +1,4 @@
-// Wire Slave Receiver
-// by Nicholas Zambetti <http://www.zambetti.com>
-
-// Demonstrates use of the Wire library
-// Receives data as an I2C/TWI slave device
-// Refer to the "Wire Master Writer" example for use with this
-
-// Created 29 March 2006
-
-// This example code is in the public domain.
+//#define __DEBUG__
 
 #include <Usb.h>
 #include <Wire.h>
@@ -108,17 +99,18 @@ void receiveEvent(int howMany) {
 void reboot(){
   if(Serial) { Serial.end(); }
   
-  wdt_enable(WDTO_1S);     // enable the watchdog
+  wdt_enable(WDTO_15MS);     // enable the watchdog
   while(1){}
 }
 
 void onDescriptor(uint8_t *buffer, uint16_t len){
   /*****Edit Here********/
+#ifdef __DEBUG__
   Serial.print("Descriptor \n");
   Serial.print("len : "); Serial.println(len);
   for(int i=0; i<len; i++) { PrintHex(buffer[i], 0x80); Serial.print(" "); if((i+1)%4 == 0) Serial.print("/"); if((i+1)%16 == 0) Serial.print("\n");}
   Serial.print("\n");
-
+#endif
   int index = 0;
   EEPROM.write(index++, _EEPROM_MAGIC);
   uni_len._16 = len;
@@ -130,7 +122,9 @@ void onDescriptor(uint8_t *buffer, uint16_t len){
 
   //Ensure EEPROM writing completed
   while(buffer[len-1] != EEPROM.read(index-1)){
+#ifdef __DEBUG__
     Serial.println("EEPROM writing not complete");  
+#endif
   }
 
   reboot();
@@ -140,10 +134,11 @@ void onDescriptor(uint8_t *buffer, uint16_t len){
 
 void onReport(uint8_t *buffer, uint16_t len){
   /*****Edit Here********/
+#ifdef __DEBUG__
   Serial.print("Report \n");
   for(int i=0; i<len; i++) { PrintHex(buffer[i], 0x80); }
   Serial.print("\n");
-
+#endif
   if(_isValidEEPROM){
     HID().SendReport(0/*unused*/, buffer, len);
   }
