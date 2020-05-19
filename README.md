@@ -7,7 +7,7 @@ So that, one HID device can be used to control multiple computers.
 |---------|---------|------------------------|
 |[![USB HID Duplicator Demo(Mouse)](http://img.youtube.com/vi/KWI-PguVAN8/0.jpg)](http://www.youtube.com/watch?v=KWI-PguVAN8 "USB HID Duplicator Demo(Mouse)")     |[![USB HID Duplicator demo (Keyboard)](http://img.youtube.com/vi/Ez5Jvu0lLoQ/0.jpg)](http://www.youtube.com/watch?v=Ez5Jvu0lLoQ "USB HID Duplicator demo (Keyboard)")   |[![USB HID Duplicator demo (Wireless Presenter)](http://img.youtube.com/vi/Hjw7fimRGSo/0.jpg)](http://www.youtube.com/watch?v=Hjw7fimRGSo "USB HID Duplicator demo (Wireless Presenter)")   |
 # Component
-A USB HID Duplicator consists of a master([USB Host Shield](https://github.com/felis/USB_Host_Shield_2.0) + Arduino UNO) and slaves(Arduino Leonardo)
+A USB HID Duplicator consists of a master([USB Host Shield](https://github.com/felis/USB_Host_Shield_2.0) + Arduino UNO) and slaves(Arduino Leonardo).  
 A master and slaves are connected via I2C serial communication.  
 
 ![USBHID_Duplicator Diagram](diagram.jpg)
