@@ -12,17 +12,18 @@ A USB HID Duplicator consists of a master([USB Host Shield](https://github.com/f
 A master and slaves are connected via I2C serial communication.
 
 # How To Use?
-1. Put "MyHID" folder into your Arduino user library directory.
+1. Install [USB Host Shield Library](https://github.com/felis/USB_Host_Shield_2.0/blob/master/README.md#how-to-include-the-library).
+2. Put "MyHID" folder into your Arduino user library directory.
 > * Arduino/
 >    * libraries/
 >        * MyHID
-2. Upload "master" sketch to master(Arduino UNO board with USB Host Shield)
-3. Upload "slave" sketch to slaves(Arduino Leonardo board)
-4. Connect matster and slaves with I2C  
+3. Upload "master" sketch to master(Arduino UNO board with USB Host Shield)
+4. Upload "slave" sketch to slaves(Arduino Leonardo board)
+5. Connect matster and slaves with I2C  
      You need to connect SCL(A5 for UNO), SDA(A4 for Arduino UNO), GND pin
- 5. Connect slaves to respective computers.(one slave for one computer)
- 6. Power up mater.
- 7. Done! Connect a USB HID device(ex. keyboard) to master and use it.
+6. Connect slaves to respective computers.(one slave for one computer)
+7. Power up mater.
+8. Done! Connect a USB HID device(ex. keyboard) to master and use it.
 
 # Reference
 * USB Host Shield
