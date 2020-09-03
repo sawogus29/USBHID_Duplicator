@@ -12,6 +12,10 @@ A master and slaves are connected via I2C serial communication.
 
 ![USBHID_Duplicator Diagram](diagram.jpg)
 
+# Dependency
+* Arduino IDE 1.8+
+* USB Host Shield Library 2.0+
+
 # How To Use?
 1. Install [USB Host Shield Library](https://github.com/felis/USB_Host_Shield_2.0/blob/master/README.md#how-to-include-the-library).
 2. Put "MyHID" folder into your Arduino user library directory.
